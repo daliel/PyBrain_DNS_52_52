@@ -60,7 +60,7 @@ class APP:
 		
 		context = zmq.Context()
 		self.socket = context.socket(zmq.SUB)
-		self.socket.bind("tcp://127.0.0.1:5452")
+		self.socket.bind("tcp://127.0.0.1:5352")
 		self.socket.setsockopt(zmq.SUBSCRIBE, '')
 		self.socket.RCVTIMEO = 25
 		#self.socket_send = context.socket(zmq.PUB)
@@ -81,7 +81,7 @@ class APP:
 		#if d != None:
 		self.dMSE = []
 		self.root.title("MAin 1x1 BackProp %s"%x)
-		self.Mainproc = Process(target=Proc_52_52.main, args=("%s\t%s\t%s"%(52, 52, x), "main", self.learningrate))
+		self.Mainproc = Process(target=Proc_52_52.main, args=("%s\t%s\t%s"%(52, 52, x), "main"))
 		self.Mainproc.start()
 
 	def sort_b(self, l):
@@ -243,9 +243,6 @@ class APP:
 					fw.write("%s"%self.dMSE[:-1])
 					fw.close()
 					self.dMSE = []
-					self.learningrate = float("{0:.9f}".format(float(l2[0])/10))
-					print self.learningrate
-					self.StepLearningText.set("Learning Rate = %s"%self.learningrate)
 					param = self.ParamFromText(d[l2[0]])
 					alter = self.Alternate(param[2])
 					self.AddProcAndButton(param[0], param[1], alter[:])
@@ -297,7 +294,7 @@ class APP:
 			self.ButtonsText.append(StringVar())
 			self.ProcessButtons.append(Button(self.ButtonFrame, textvariable = self.ButtonsText[-1]))
 			self.ProcessButtons[-1].bind("<Button-1>", self.CommandStopProc)
-			self.startedProc.append(Process(target=Proc_52_52.main, args=("%s\t%s\t%s"%(inp, out, unicode(alter[i])),i, self.learningrate, i)))
+			self.startedProc.append(Process(target=Proc_52_52.main, args=("%s\t%s\t%s"%(inp, out, unicode(alter[i])),i, i)))
 			self.ProcessButtons[-1].pack(side = BOTTOM)
 		for i in xrange(len(self.ProcessButtons)):
 			try:

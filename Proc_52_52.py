@@ -9,7 +9,7 @@ ITERATIONS = 1000000
 
 Net = None
 
-def main(argv, but, lr, update = None):
+def main(argv, but, update = None):
 	global lendata, data
 	lendata = 0
 	ITERATIONS = 1000000
@@ -86,14 +86,14 @@ def main(argv, but, lr, update = None):
 				if i.find(l2[0]) != -1:
 					Net.UpdateWeights(i)
 					break
-	ReloadData(Net, lr)
+	ReloadData(Net)
 	context = zmq.Context()
 	#socket_r = context.socket(zmq.SUB)
 	#socket_r.bind("tcp://127.0.0.1:5645")
 	#socket_r.setsockopt(zmq.SUBSCRIBE, '')
 	#socket_r.RCVTIMEO = 250
 	socket = context.socket(zmq.PUB)
-	socket.connect("tcp://127.0.0.1:5452")
+	socket.connect("tcp://127.0.0.1:5352")
 	lastfname = ""
 	old_err  = 0
 	count = 0
@@ -141,7 +141,7 @@ def main(argv, but, lr, update = None):
 			socket.send(msg)
 			break
 		if i%(ITERATIONS/100) == 0:
-			ReloadData(Net, lr)
+			ReloadData(Net)
 			fname = '%s  %s_%s_%s.work'%(Net.err, Net.inputsize, Net.hiden, Net.outputsize)
 			if fname == lastfname:
 				fnamecmp+=1
@@ -162,7 +162,7 @@ def main(argv, but, lr, update = None):
 	print ("end %s"%(a))
 	sys.exit()
 
-def ReloadData(Net, learningrate):
+def ReloadData(Net):
 	global lendata, data
 	print ("Begin loading data")
 	
@@ -178,7 +178,7 @@ def ReloadData(Net, learningrate):
 			j+=1
 		#inx, res = CreateRegressionData_52(res[:])
 	
-		r = Net.AddData(res[:-1], res[1:], learningrate)
+		r = Net.AddData(res[:-1], res[1:])
 	lendata = len(out)
 	
 	del out

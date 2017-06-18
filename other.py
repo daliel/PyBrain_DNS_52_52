@@ -1,26 +1,4 @@
 # -*- coding: utf-8 -*-
-def MaxSimpleMul(x):
-	y = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
-	if type(x) == list:
-		lx = len(x)
-	else: lx = x
-	for i in range(len (y)-1, -1, -1):
-		if lx >y[i]:
-			if lx%y[i] == 0:
-				return y[i]
-	
-def ZIP(x, y):
-	print x
-	lx = len(x)
-	x = np.array(x).reshape((1, lx))
-	print x
-	x.reshape((lx/y,y))
-	print x
-	
-	
-def Convulation(X, Y):
-	return map(lambda a,b:a*b, X,Y[::-1])
-
 def TransToIntList(e):
 	a = []
 	sa  = sum(e)/len(e)
@@ -342,14 +320,7 @@ def CreateRegressionData_keno(data):
 	return inp[:], outp[:]
 	
 if __name__ == "__main__":
-	out = read_file_data_r_1("data.txt")
-	res = [0 for i in xrange(len(out)/6)]
-	j=0
-	for i in xrange(0, len(out), 6):
-		res[j] = [IntListToTrans_52(out[i:i+6])]
-		j+=1
-	for i in xrange(1, len(res)):
-		pass
+	read_file_data_r_maxima("data_.txt")
 	
 	
 	

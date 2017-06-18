@@ -89,14 +89,14 @@ class NET():
 					print (conn.whichBuffers(cc), conn.params[cc])
 		print ("END")
 
-	def AddData(self, datainput, dataoutput, learningrate):
+	def AddData(self, datainput, dataoutput):
 		if len(dataoutput) != len(datainput):
 			print ("Not equals data", len(dataoutput), len(datainput))
 			return 1
 		self.ds = SupervisedDataSet(self.inputsize, self.outputsize)
 		for i in xrange(len(dataoutput)):
 			self.ds.appendLinked(datainput[i], dataoutput[i])
-		self.trainer = RPropMinusTrainer(self.net, dataset = self.ds, learningrate = learningrate)
+		self.trainer = RPropMinusTrainer(self.net, dataset = self.ds, learningrate = 0.1)
 		return 0
 	def AddDataSequential(self, data):
 		self.ds = SequentialDataSet(self.inputsize, self.outputsize)		
@@ -112,7 +112,7 @@ class NET():
 		for i in range(self.ds.getNumSequences()):
 			for input, target in self.ds.getSequenceIterator(i):
 				print i, TransToIntList_45(input), TransToIntList_45(target)"""
-		self.trainer = RPropMinusTrainer(self.net, dataset = self.ds, learningrate = 0.01)
+		self.trainer = RPropMinusTrainer(self.net, dataset = self.ds, learningrate = 0.1)
 		return 0
  
  
